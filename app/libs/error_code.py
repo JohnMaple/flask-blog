@@ -8,14 +8,19 @@ __author__ = 'Henry'
 
 
 class Success(APIException):
-    code = 201
+    code = 200
     msg = 'ok'
     error_code = 0
 
 
+class UpdateSuccess(Success):
+    code = 201
+    error_code = 1
+
+
 class DeleteSuccess(Success):
     code = 202
-    error_code = 1
+    error_code = 2
 
 
 class ServerError(APIException):

@@ -15,7 +15,10 @@ load_dotenv(os.path.join(os.path.abspath(os.path.dirname(__file__)), '.env'))
 
 def register_blueprint(app):
     """ 注册蓝图 """
-    pass
+    from app.api.v1 import create_blueprint_v1
+    from app.api.admin import create_blueprint_admin
+    app.register_blueprint(create_blueprint_v1(), url_prefix='/v1')
+    app.register_blueprint(create_blueprint_admin(), url_prefix='/admin')
 
 
 def register_plugins(app):
@@ -29,13 +32,11 @@ def create_app():
     app = Flask(__name__)
 
     # 生产开发环境
-    app_env = os.environ.get('APP_ENV').title() + 'Config'
+    app_env = os.getenv('APP_ENV', 'development').title() + 'Config'
 
     # 加载配置项
     app.config.from_object('app.config.secure.' + app_env)
     app.config.from_object('app.config.settings')
-
-    print(os.getenv('SQLALCHEMY_BINDS'))
 
     # 注册蓝图
     register_blueprint(app)

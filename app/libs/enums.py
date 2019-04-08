@@ -18,3 +18,9 @@ class ClientTypeEnum(Enum):
     USER_WX = 201
 
 
+class StatusEnum(Enum):
+    DELETE = 0  # 删除
+    NORMAL = 1  # 正常
+    HIDDEN = 2  # 隐藏
+
+

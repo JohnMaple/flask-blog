@@ -6,8 +6,6 @@ import os
 
 __author__ = 'Henry'
 
-# SCERET_KEY = os.urandom(24)
-SECRET_KEY = '\x91\xb3\xe2-\xe678g\xc4\xd0^W\x8c=\x91rjfg%\x1d1\xbd\x8b>\xc6\xba\x98\xd8X$\xbf'
 
 DB_CONNECTION = os.environ.get('DB_CONNECTION', 'mysql')
 DB_HOST = os.environ.get('DB_HOST', '127.0.0.1')
@@ -21,6 +19,9 @@ class Config:
     DEBUG = False
     TESTING = False
 
+    # SCERET_KEY = os.urandom(24)
+    SECRET_KEY = '\x91\xb3\xe2-\xe678g\xc4\xd0^W\x8c=\x91rjfg%\x1d1\xbd\x8b>\xc6\xba\x98\xd8X$\xbf'
+
     # 数据库配置
     # SQLALCHEMY_DATABASE_URI = DB_CONNECTION + '+cymysql://' + DB_USERNAME + ':' + DB_PASSWORD + '@' + DB_HOST + ':'+ DB_PORT + '/' + DB_DATABASE
     SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://root:root@localhost:3306/flask_blog'
@@ -29,16 +30,16 @@ class Config:
 
 
 class ProductionConfig(Config):
-    DEBUG = os.environ.get('DEBUG', False)
+    DEBUG = os.getenv('DEBUG', False)
 
     # 数据库配置
-    SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://root:root@localhost:3306/flask_restful'
+    SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://root:root@localhost:3306/flask_blog'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_TEARDOWN = True
 
 
 class DevelopmentConfig(Config):
-    DEBUG = os.environ.get('DEBUG', True)
+    DEBUG = os.getenv('DEBUG', True)
 
 
 class TestingConfig(Config):

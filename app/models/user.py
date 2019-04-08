@@ -12,9 +12,12 @@ __author__ = 'Henry'
 
 
 class User(Base):
+    __abstract__ = True
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True, comment='id')
     nickname = Column(String(24), nullable=False, comment='昵称')
     email = Column(String(24), unique=True, nullable=False, comment='邮箱')
+    phone = Column(String(13), unique=True, nullable=False, comment='手机号')
     auth = Column(SmallInteger, default=1, comment='权限，超级管理员或普通用户')
     _password = Column('password', String(128), nullable=False, comment='密码')
 

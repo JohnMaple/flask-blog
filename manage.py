@@ -1,11 +1,11 @@
-from flask_migrate import  Migrate, MigrateCommand
+from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from werkzeug.exceptions import HTTPException
 
 from app import create_app, db
 from app.libs.error import APIException
 from app.libs.error_code import ServerError
-import os
+from app import models
 
 app = create_app()
 manager = Manager(app)

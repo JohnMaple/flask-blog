@@ -53,11 +53,27 @@ db = SQLAlchemy(query_class=Query)
 
 class Base(db.Model):
     __abstract__ = True  # 不会创建base表
-    create_time = Column('create_time', Integer)
+    created_at = Column('created_at', Integer)
+    updated_at = Column('updated_at', Integer)
     status = Column(SmallInteger, default=1)
 
     def __init__(self):
-        self.create_time = int(datetime.now().timestamp())
+        self.created_at = int(datetime.now().timestamp())
+        self.updated_at = int(datetime.now().timestamp())
+
+    @property
+    def create_datetime(self):
+        if self.created_at:
+            return datetime.fromtimestamp(self.created_at)
+        else:
+            None
+
+    @property
+    def update_datetime(self):
+        if self.updated_at:
+            return datetime.fromtimestamp(self.updated_at)
+        else:
+            None
 
     def set_attrs(self, attrs_dict):
         """
@@ -68,13 +84,6 @@ class Base(db.Model):
         for key, value in attrs_dict.items():
             if hasattr(self, key) and key != 'id':
                 setattr(self, key, value)
-
-    @property
-    def create_datetime(self):
-        if self.create_time:
-            return datetime.fromtimestamp(self.create_time)
-        else:
-            None
 
     def delete(self):
         self.status = 0

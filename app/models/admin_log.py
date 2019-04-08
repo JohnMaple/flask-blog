@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-    @description:
+    @description: 
 """
-from . import admin
 
 __author__ = 'Henry'
 

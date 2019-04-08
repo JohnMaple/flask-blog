@@ -8,6 +8,6 @@ __author__ = 'Henry'
 
 
 # token 过期时间
-TOKEN_EXPIRATION = eval(os.environ.get('TOKEN_EXPIRATION'))
+TOKEN_EXPIRATION = eval(str(os.getenv('TOKEN_EXPIRATION'))) or 7200
 
 

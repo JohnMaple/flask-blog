@@ -9,15 +9,15 @@ __author__ = 'Henry'
 
 from app import create_app
 from app.models.base import db
-from app.models.user import User
+from app.models.admin import Admin
 
 app = create_app()
 with app.app_context():
     with db.auto_commit():
         # 创建一个超级管理员
-        user = User()
-        user.nickname = 'Super'
+        user = Admin()
+        user.nickname = 'Admin'
+        user.username = 'admin'
         user.password = '123456'
-        user.email = '999@qq.com'
-        user.auth = 2
+        user.email = '934879001@qq.com'
         db.session.add(user)
