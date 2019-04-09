@@ -3,14 +3,20 @@
     @description: 初始化项目，加载配置项，注册蓝图、数据库等
 """
 import os
-from flask import Flask
+from .app import Flask
+from flask_mail import Mail
+from flask_caching import Cache
 from dotenv import load_dotenv
 from app.models.base import db
 
 __author__ = 'Henry'
 
+
 # 加载.env文件到环境变量
 load_dotenv(os.path.join(os.path.abspath(os.path.dirname(__file__)), '.env'))
+
+mail = Mail()
+cache = Cache()
 
 
 def register_blueprint(app):
@@ -24,6 +30,12 @@ def register_blueprint(app):
 def register_plugins(app):
     # 注册模型
     db.init_app(app)
+
+    # 注册邮件模块
+    mail.init_app(app)
+
+    # 注册flask-caching模块
+    cache.init_app(app)
 
 
 def create_app():

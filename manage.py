@@ -1,5 +1,6 @@
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
+from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 
 from app import create_app, db
@@ -7,7 +8,12 @@ from app.libs.error import APIException
 from app.libs.error_code import ServerError
 from app import models
 
+
 app = create_app()
+
+# 跨域处理
+cors = CORS(app)
+
 manager = Manager(app)
 migrate = Migrate(app, db)
 
