@@ -12,7 +12,7 @@ from app import models
 app = create_app()
 
 # 跨域处理
-cors = CORS(app)
+cors = CORS(app, supports_credentials=True)
 
 manager = Manager(app)
 migrate = Migrate(app, db)
