@@ -4,8 +4,10 @@
 """
 import random
 from flask import jsonify
+
 from app.libs.code import Code
 from app.libs.error_code import Success
+
 
 __author__ = 'Henry'
 
@@ -45,5 +47,6 @@ def get_captcha(length=4):
     for i in range(length):
         code += str(random.randint(0, 9))
     return code
+
 
 

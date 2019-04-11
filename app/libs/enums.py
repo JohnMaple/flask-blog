@@ -8,14 +8,19 @@ __author__ = 'Henry'
 
 
 class ClientTypeEnum(Enum):
-    USER_EMAIL = 100
-    USER_MOBILE = 101
+    USER_NAME = 100
+    USER_EMAIL = 101
+    USER_MOBILE = 102
 
     # 微信小程序
     USER_MINA = 200
 
     # 微信公众号
     USER_WX = 201
+
+    USER_QQ = 300
+    USER_WEIBO = 400
+    USER_GITHUB = 500
 
 
 class StatusEnum(Enum):
