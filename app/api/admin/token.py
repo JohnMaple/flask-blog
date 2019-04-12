@@ -13,7 +13,6 @@ from app.libs.utils import generate_nonce_str
 from app.models.admin import Admin
 from app.validators.forms import ClientForm
 
-import redis
 
 __author__ = 'Henry'
 
@@ -37,7 +36,7 @@ def get_token():
     # 生成token, 加盐生成token，hash存储redis，注销时，清空salt即可
     token = generate_auth_token(identity['uid'], form.type.data, identity['scope'], expiration)
 
-    
+
 
     pass
 
