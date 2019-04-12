@@ -20,8 +20,7 @@ class Admin(Base):
     _password = Column('password', String(128), nullable=False, comment='密码')
     avatar = Column(String(100), nullable=False, default='', comment='头像')
     email = Column(String(100), nullable=False, default='', comment='邮箱')
-    token = Column(String(100), nullable=False, default='', comment='token')
-    token_expiration = Column(DateTime)
+    login_at = Column('login_at', Integer, comment='登录时间')
     created_at = Column('created_at', Integer, comment='创建时间')
     updated_at = Column('updated_at', Integer, comment='更新时间')
     status = Column(SmallInteger, default=1, comment='状态,0:删除,1:正常,2:隐藏')
@@ -29,7 +28,7 @@ class Admin(Base):
     # flask 通过元类创建对象，不会自动执行构造函数
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['id', 'username', 'nickname', 'avatar', 'email', 'token', 'token_expiration']
+        self.fields = ['id', 'username', 'nickname', 'avatar', 'email', 'create_at', 'update_at']
 
     @property
     def password(self):
@@ -52,6 +51,8 @@ class Admin(Base):
 
         if not user.check_password(password):
             raise AuthFailed()
+
+        return {'uid': user.id}
 
 
 

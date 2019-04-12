@@ -27,6 +27,13 @@ class Config:
     CACHE_REDIS_PASSWORD = os.getenv('CACHE_REDIS_PASSWORD', '')
     CACHE_REDIS_DB = os.getenv('CACHE_REDIS_DB', '')
 
+    # redis 配置
+    REDIS_KEY_PREFIX = os.getenv('REDIS_KEY_PREFIX', 'tim_')
+    REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+    REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', '')
+    REDIS_PORT = int(os.getenv('REDIS_PORT', 6379))
+    REDIS_DB = int(os.getenv('REDIS_DB', ''))
+
 
 class ProductionConfig(Config):
     DEBUG = True if 'true' == os.getenv('DEBUG') else False

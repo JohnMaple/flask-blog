@@ -4,6 +4,7 @@
 """
 import random
 from flask import jsonify
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from app.libs.code import Code
 from app.libs.error_code import Success
@@ -31,11 +32,11 @@ def make_result(msg=None, data=None, error_code=0, extend=None):
     return Success(msg=msg, error_code=error_code, data=data, extend=extend)
 
 
-def create_nonce_str(n):
+def generate_nonce_str(length=4):
     # 获取nonceStr（随机字符串）
     chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     nonce_str = ""
-    for i in range(0, n):
+    for i in range(0, length):
         s = random.randint(0, len(chars)-1)
         nonce_str += chars[s:s+1]
     return nonce_str

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    @description: token验证
+    @description: 后台多重API验证
 """
 from collections import namedtuple
 
@@ -10,6 +10,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSigna
 
 from app.libs.error_code import AuthFailed, Forbidden
 from app.libs.scope import is_in_scope
+from app.models.admin import Admin
 
 __author__ = 'Henry'
 
@@ -24,14 +25,18 @@ User = namedtuple('User', ['uid', 'ac_type', 'scope'])
 @basic_auth.verify_password
 def verify_password(username_or_token, password):
     # first try to authenticate by token
-    user = User.verify_auth_token(username_or_token)
+    user = verify_auth_token(username_or_token)
     if not user:
         # try to authenticate with username/password
-        user = User.query.filter_by(username=username_or_token).first()
-        if not user or not user.verify_password(password):
+        user = Admin.query.filter_by(username=username_or_token).first()
+        if not user or not user.check_password(password):
             return False
     g.user = user
     return True
+
+
+@token_auth.verify_token
+def verify_token(token):
 
     user_info = verify_auth_token(token)
 

@@ -5,6 +5,7 @@
 from flask import jsonify, session
 
 from app import cache
+from app.libs.redis import Redis
 from app.libs.redprint import Redprint
 
 __author__ = 'Henry'
@@ -19,6 +20,7 @@ def get_user():
     :param uid:
     :return:
     """
+    redis = Redis()
     cache.set('name', 'xiaoming', timeout=30)
     cache.set('person', {'name': 'aaa', 'age': 20})
     name = cache.get('name')
@@ -28,6 +30,13 @@ def get_user():
         name=cache.get('name'),
         person=cache.get('person'),
         username=session.get('username')
+    )
+
+    redis.set('r_name', 'john')
+    r_name = redis.get('r_name')
+
+    data = dict(
+        name=r_name.decode('utf-8')
     )
 
     return jsonify(data)
