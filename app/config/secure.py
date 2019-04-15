@@ -25,14 +25,14 @@ class Config:
     CACHE_REDIS_HOST = os.getenv('CACHE_REDIS_HOST', 'localhost')
     CACHE_REDIS_PORT = int(os.getenv('CACHE_REDIS_PORT', 6379))
     CACHE_REDIS_PASSWORD = os.getenv('CACHE_REDIS_PASSWORD', '')
-    CACHE_REDIS_DB = os.getenv('CACHE_REDIS_DB', '')
+    CACHE_REDIS_DB = os.getenv('CACHE_REDIS_DB', 0)
 
     # redis 配置
     REDIS_KEY_PREFIX = os.getenv('REDIS_KEY_PREFIX', 'tim_')
     REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
     REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', '')
     REDIS_PORT = int(os.getenv('REDIS_PORT', 6379))
-    REDIS_DB = int(os.getenv('REDIS_DB', ''))
+    REDIS_DB = int(os.getenv('REDIS_DB', 0))
 
 
 class ProductionConfig(Config):

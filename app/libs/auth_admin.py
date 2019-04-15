@@ -9,6 +9,7 @@ from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth, MultiAuth
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired
 
 from app.libs.error_code import AuthFailed, Forbidden
+from app.libs.redis import Redis
 from app.libs.scope import is_in_scope
 from app.models.admin import Admin
 
@@ -19,7 +20,7 @@ basic_auth = HTTPBasicAuth()
 token_auth = HTTPTokenAuth()
 auth = MultiAuth(basic_auth, token_auth)
 
-User = namedtuple('User', ['uid', 'ac_type', 'scope'])
+User = namedtuple('User', ['uid', 'ac_type'])
 
 
 @basic_auth.verify_password
@@ -39,6 +40,7 @@ def verify_password(username_or_token, password):
 def verify_token(token):
 
     user_info = verify_auth_token(token)
+    g.admin_token = token
 
     if not user_info:
         return False
@@ -49,7 +51,10 @@ def verify_token(token):
 
 def verify_auth_token(token):
     """验证token"""
-    serializer = Serializer(current_app.config['SECRET_KEY'])
+    redis_name = current_app.config['REDIS_KEY_PREFIX'] + 'admin_token'
+    redis = Redis()
+    salt = redis.hget(redis_name, token)
+    serializer = Serializer(current_app.config['SECRET_KEY'], salt=salt)
     try:
         data = serializer.loads(token)
     except BadSignature:
@@ -59,13 +64,13 @@ def verify_auth_token(token):
 
     uid = data['uid']
     ac_type = data['type']
-    scope = data['scope']
+    # scope = data['scope']
 
     # request 可以确认视图函数
-    if not is_in_scope(scope, request.endpoint):
-        raise Forbidden()
+    # if not is_in_scope(scope, request.endpoint):
+    #     raise Forbidden()
 
-    return User(uid, ac_type, scope)
+    return User(uid, ac_type)
 
 
 

@@ -12,6 +12,19 @@ from app.validators.base import BaseForm as Form
 __author__ = 'Henry'
 
 
+class AdminLoginForm(Form):
+    username = StringField(validators=[DataRequired(message='用户名不能为空'), length(min=5, max=32)])
+    password = StringField(validators=[DataRequired(message='密码不能为空'), length(min=6, max=32)])
+    type = IntegerField(validators=[DataRequired()])
+
+    def validate_type(self, value):
+        try:
+            client = ClientTypeEnum(value.data)  # 通过值获取枚举名称 client 是枚举类型
+        except ValueError as e:
+            raise e
+        self.type.data = client
+
+
 class ClientForm(Form):
     account = StringField(validators=[DataRequired(message='不允许为空'), length(min=5, max=32)])
     secret = StringField()

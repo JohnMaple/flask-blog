@@ -26,7 +26,7 @@ class BaseForm(Form):
             # 所有错误信息存在form.errors
             raise ParameterException(msg=self.errors)
 
-        return True
+        return self
 
 
 
