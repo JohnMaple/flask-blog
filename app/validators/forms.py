@@ -13,7 +13,7 @@ __author__ = 'Henry'
 
 
 class AdminLoginForm(Form):
-    username = StringField(validators=[DataRequired(message='用户名不能为空'), length(min=5, max=32)])
+    username = StringField('账号', validators=[DataRequired(message='用户名不能为空'), length(min=5, max=32, message='用户名长度错误')])
     password = StringField(validators=[DataRequired(message='密码不能为空'), length(min=6, max=32)])
     type = IntegerField(validators=[DataRequired()])
 
