@@ -2,6 +2,10 @@
 """
     @description: 
 """
+import uuid
+
+from flask._compat import text_type
+from werkzeug.http import http_date
 
 __author__ = 'Henry'
 

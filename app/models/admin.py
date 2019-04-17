@@ -23,7 +23,7 @@ class Admin(Base):
     avatar = Column(String(100), nullable=False, default='', comment='头像')
     email = Column(String(100), nullable=False, default='', comment='邮箱')
     last_login_ip = Column(String(50), nullable=False, default='', comment='最后登录的ip')
-    lask_login_at = Column('last_login_at', Integer, comment='最后登录时间')
+    last_login_at = Column('last_login_at', Integer, comment='最后登录时间')
     created_at = Column('created_at', Integer, comment='创建时间')
     updated_at = Column('updated_at', Integer, comment='更新时间')
     status = Column(SmallInteger, default=1, comment='状态,0:删除,1:正常,2:隐藏')
@@ -32,7 +32,8 @@ class Admin(Base):
     @orm.reconstructor
     def __init__(self):
         super().__init__()
-        self.fields = ['id', 'username', 'nickname', 'avatar', 'email', 'create_at', 'update_at']
+        # json序列化的时候用到
+        self.fields = ['id', 'username', 'nickname', 'avatar', 'email', 'created_at', 'updated_at']
 
     @property
     def password(self):
@@ -43,9 +44,9 @@ class Admin(Base):
         self._password = generate_password_hash(raw)
 
     @property
-    def lask_login_datetime(self):
-        if self.lask_login_at:
-            return datetime.fromtimestamp(self.lask_login_at)
+    def last_login_datetime(self):
+        if self.last_login_at:
+            return datetime.fromtimestamp(self.last_login_at)
         else:
             None
 

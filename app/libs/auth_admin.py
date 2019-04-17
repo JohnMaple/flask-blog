@@ -45,7 +45,7 @@ def verify_token(token):
     if not user_info:
         return False
     else:
-        g.user = user_info
+        g.admin = user_info
         return True
 
 

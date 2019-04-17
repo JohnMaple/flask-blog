@@ -56,6 +56,7 @@ class Base(db.Model):
     created_at = Column('created_at', Integer)
     updated_at = Column('updated_at', Integer)
     status = Column(SmallInteger, default=1)
+    fields = []
 
     def __init__(self):
         self.created_at = int(datetime.now().timestamp())
@@ -91,7 +92,7 @@ class Base(db.Model):
     def __getitem__(self, item):
         return getattr(self, item)
 
-    # 定义返回字典中的键
+    # dict() 会自动调用keys方法，如何获取全部的fields？定义返回字典中的键
     def keys(self):
         return self.fields
 

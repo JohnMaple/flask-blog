@@ -47,7 +47,7 @@ def get_token():
 @auth.login_required
 def revoke_toke():
     # 解析token获取用户信息
-    if g.user:
+    if g.admin:
         redis = Redis()
         redis_name = current_app.config['REDIS_KEY_PREFIX'] + 'admin_token'
         redis.hdel(redis_name, g.admin_token)
