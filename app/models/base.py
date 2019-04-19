@@ -6,7 +6,7 @@ from datetime import datetime
 from contextlib import contextmanager
 
 from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
-from sqlalchemy import Column, Integer, SmallInteger
+from sqlalchemy import Column, Integer, SmallInteger, func
 
 from app.libs.error_code import NotFound
 
@@ -56,7 +56,10 @@ class Base(db.Model):
     created_at = Column('created_at', Integer)
     updated_at = Column('updated_at', Integer)
     status = Column(SmallInteger, default=1)
-    fields = []
+
+    # 在migrate配置
+    # compare_type = True,  # 检查字段类型
+    # compare_server_default = True,  # 比较默认值
 
     def __init__(self):
         self.created_at = int(datetime.now().timestamp())

@@ -14,7 +14,10 @@ class ProfileViewModel:
         self.nickname = profile.nickname
         self.email = profile.email
         self.avatar = profile.avatar
-    pass
+        self.last_login_datetime = profile.last_login_datetime or ''
+        self.last_login_ip = profile.last_login_ip or ''
+        self.status = profile.status
+        self.roles = ['admin']
 
 
 class ProfileCollection:

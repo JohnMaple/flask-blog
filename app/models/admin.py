@@ -4,9 +4,10 @@
 """
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, SmallInteger, orm, DateTime
+from sqlalchemy import Column, Integer, String, SmallInteger, orm, DateTime, func
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from app.libs.enums import StatusEnum
 from app.libs.error_code import AuthFailed
 from app.models.base import Base
 
@@ -33,7 +34,7 @@ class Admin(Base):
     def __init__(self):
         super().__init__()
         # json序列化的时候用到
-        self.fields = ['id', 'username', 'nickname', 'avatar', 'email', 'created_at', 'updated_at']
+        self.fields = ['id', 'username', 'nickname', 'avatar', 'email', 'last_login_ip', 'last_login_datetime', 'status']
 
     @property
     def password(self):
